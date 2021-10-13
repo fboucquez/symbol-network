@@ -1,0 +1,34 @@
+preset: custom-network-preset.yml
+cloneFromPreset: testnet
+domain: mytest.com
+suffix: testprefix
+networkType: 120
+isNewNetwork: true
+customNetworkPreset:
+  networkDescription: My Private Test Network
+  bootstrapVersion: 1.1.0
+  nemesisGenerationHashSeed: 000000000000000000000000000000000000000000000000000000000000000A
+  epochAdjustment: 1626575785s
+  baseNamespace: pirate
+  nemesis:
+    mosaics:
+      - name: gold
+deploymentData:
+    type: CUSTOM
+faucetBalances:
+    - 392146430
+nodeTypes:
+    -
+        nickName: dual
+        nodeType: VotingDual
+        restProtocol: HttpOnly
+        balances:
+            - 3000000
+        total: 2
+    -
+        nickName: demo
+        nodeType: HarvestingDemo
+        restProtocol: HttpAndHttps
+        balances:
+            - 1000000
+        total: 1

@@ -1,0 +1,110 @@
+{
+    "name": "symbol-network",
+    "version": "0.0.1",
+    "description": "CLI tools to create node clusters for new or existing Symbol networks.",
+    "bin": {
+        "symbol-network": "bin/run"
+    },
+    "homepage": "https://github.com/fboucquez/symbol-network",
+    "bugs": "https://github.com/fboucquez/symbol-network/issues",
+    "scripts": {
+        "doc": "shx mkdir -p ts-docs && typedoc --out \"ts-docs\" src && touch ./ts-docs/.nojekyll",
+        "clean": "npx shx rm -rf ./lib",
+        "purge": "npx shx rm -rf lib coverage node_modules target .nyc_output logs.log ts-docs",
+        "lint": "eslint --cache src/ test/ --ext .ts",
+        "lint:fix": "eslint src/ test/ --ext .ts --fix",
+        "prettier": "prettier --write ./src",
+        "style:fix": "npm run create-index-files && npm run prettier && npm run lint:fix && npm run oclif-doc",
+        "create-index-files": "cti create ./src -b -n -e commands",
+        "postpack": "npx shx rm -f oclif.manifest.json",
+        "posttest": "eslint src/ test/ --ext .ts",
+        "oclif-doc": "oclif-dev manifest && oclif-dev readme --multi",
+        "watch": "tsc --watch",
+        "compile": "tsc ",
+        "build": "npx shx rm -rf lib && npm run compile",
+        "prepack": "npx shx rm -rf lib && npm run compile && npm run oclif-doc",
+        "test": "nyc --reporter=lcov --extension .ts mocha -r ts-node/register --timeout 900000 --forbid-only \"test/**/*.test.ts\"",
+        "e2e": "nyc --reporter=lcov --extension .ts mocha -r ts-node/register --timeout 900000 --forbid-only \"test/**/*.e2e.ts\"",
+        "coveralls-report": "cat ./coverage/lcov.info | coveralls",
+        "version": "echo $npm_package_version",
+        "install-cli": "npm pack && npm i -g"
+    },
+    "engines": {
+        "node": ">=12.0.0"
+    },
+    "files": [
+        "/bin",
+        "/lib",
+        "/npm-shrinkwrap.json",
+        "/oclif.manifest.json"
+    ],
+    "oclif": {
+        "commands": "./lib/commands",
+        "bin": "symbol-network",
+        "plugins": [
+            "@oclif/plugin-autocomplete",
+            "@oclif/plugin-help"
+        ]
+    },
+    "keywords": [],
+    "author": "Fernando Boucquez <fboucquez@gmail.com>",
+    "license": "Apache-2.0",
+    "mocha": {
+        "timeout": 40000
+    },
+    "types": "lib/index.d.ts",
+    "dependencies": {
+        "@oclif/command": "^1.8.0",
+        "@oclif/config": "^1.17.0",
+        "@oclif/plugin-autocomplete": "^0.3.0",
+        "@oclif/plugin-help": "^3.2.2",
+        "figlet": "^1.5.0",
+        "inquirer": "^8.1.1",
+        "lodash": "^4.17.21",
+        "node-fetch": "^2.6.0",
+        "symbol-bootstrap": "^1.1.2-network-202111261018",
+        "symbol-sdk": "^1.0.3",
+        "tslib": "^2.3.0",
+        "winston": "^3.3.3"
+    },
+    "devDependencies": {
+        "@oclif/dev-cli": "^1.22.2",
+        "@oclif/test": "^1.2.8",
+        "@types/archiver": "^5.1.0",
+        "@types/chai": "^4.2.12",
+        "@types/figlet": "^1.2.0",
+        "@types/handlebars": "^4.1.0",
+        "@types/inquirer": "^7.3.1",
+        "@types/js-yaml": "^3.12.5",
+        "@types/lodash": "^4.14.165",
+        "@types/memorystream": "^0.3.0",
+        "@types/mocha": "^8.2.2",
+        "@types/node": "^10.17.28",
+        "@types/node-fetch": "^2.5.10",
+        "@types/semver": "^7.3.6",
+        "@types/winston": "^2.4.4",
+        "@typescript-eslint/eslint-plugin": "^3.7.1",
+        "@typescript-eslint/parser": "^3.7.1",
+        "chai": "^4.2.0",
+        "coveralls": "^3.1.0",
+        "create-ts-index": "^1.13.6",
+        "dir-compare": "^3.3.0",
+        "eslint": "^6.8.0",
+        "eslint-config-prettier": "^6.10.1",
+        "eslint-plugin-prettier": "^3.1.3",
+        "globby": "^10.0.2",
+        "marked": ">=2.0.0",
+        "mocha": "^8.3.2",
+        "mocha-lcov-reporter": "^1.3.0",
+        "mock-stdin": "^1.0.0",
+        "nock": "^13.1.1",
+        "nyc": "^15.1.0",
+        "prettier": "^2.0.5",
+        "prettier-plugin-organize-imports": "^1.1.1",
+        "shx": "^0.3.3",
+        "ts-node": "^8.10.2",
+        "typedoc": "^0.20.34",
+        "typescript": "^3.9.7"
+    },
+    "gitHead": "b24acdda47ff73f56412c42b39f52dbf6d37686d"
+}

@@ -1,0 +1,20 @@
+privateKeySecurityMode: PROMPT_MAIN_TRANSPORT
+nodes:
+    -
+        friendlyName: testprefix-demo-001
+        host: testprefix-demo-001.mytest.com
+        voting: false
+        harvesting: true
+        dockerComposeDebugMode: false
+        brokerDockerComposeDebugMode: false
+gateways:
+    -
+        openPort: true
+httpsProxies:
+    -
+        excludeDockerService: false
+faucets:
+    -
+        repeat: 1
+        privateKey: 000000000000000000000000000000000000000000000000000000000000000D
+nemesisSeedFolder: nemesis-seed
