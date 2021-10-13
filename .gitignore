@@ -1,0 +1,14 @@
+/.nyc_output
+/dist
+/lib
+/tmp
+node_modules
+/target/
+/.idea/
+/logs.log
+symbol-*.tgz
+/.eslintcache
+coverage
+/ts-docs/
+/oclif.manifest.json
+*.iml

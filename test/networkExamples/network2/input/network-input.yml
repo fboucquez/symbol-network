@@ -1,0 +1,37 @@
+preset: custom-network-preset.yml
+cloneFromPreset: mainnet
+domain: mytest.com
+suffix: testprefix
+friendlyNamePattern: $suffix-$nickname-$friendlyNumber
+networkType: 104
+isNewNetwork: true
+faucetBalances:
+    - 392146430
+nodeTypes:
+    -
+        nickName: beacon
+        nodeType: VotingPeer
+        balances:
+            - 3000000
+        total: 2
+    -
+        nickName: demo
+        nodeType: HarvestingDemo
+        balances:
+            - 1000000
+        total: 1
+        restProtocol: HttpsOnly
+customNetworkPreset:
+    nemesis:
+        mosaics:
+            -
+                name: gold
+    reportBootstrapVersion: 1.1.0
+    peersP2PListLimit: 10000
+    peersApiListLimit: 10000
+    restDeploymentToolVersion: 1.0.8
+    restDeploymentToolLastUpdatedDate: '2021-07-05'
+    networkDescription: My Private Test Network
+    nemesisGenerationHashSeed: 000000000000000000000000000000000000000000000000000000000000000A
+    epochAdjustment: 1626575785s
+    baseNamespace: pirate

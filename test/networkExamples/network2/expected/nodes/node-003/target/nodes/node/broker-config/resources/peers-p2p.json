@@ -1,0 +1,27 @@
+{
+  "_info": "this file contains a list of peers",
+  "knownPeers": [
+    {
+      "publicKey": "3B6A27BCCEB6A42D62A3A8D02A6F0D73653215771DE243A63AC048A18B59DA29",
+      "endpoint": {
+        "host": "testprefix-beacon-001.mytest.com",
+        "port": 7900
+      },
+      "metadata": {
+        "name": "testprefix-beacon-001",
+        "roles": "Peer,Voting"
+      }
+    },
+    {
+      "publicKey": "FD50B8E3B144EA244FBF7737F550BC8DD0C2650BBC1AADA833CA17FF8DBF329B",
+      "endpoint": {
+        "host": "testprefix-beacon-002.mytest.com",
+        "port": 7900
+      },
+      "metadata": {
+        "name": "testprefix-beacon-002",
+        "roles": "Peer,Voting"
+      }
+    }
+  ]
+}

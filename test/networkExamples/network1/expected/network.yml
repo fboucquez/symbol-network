@@ -1,0 +1,255 @@
+cloneFromPreset: testnet
+preset: custom-network-preset.yml
+domain: mycompany.com
+suffix: myc
+networkType: 152
+isNewNetwork: true
+customNetworkPreset:
+    reportBootstrapVersion: 1.1.0
+    networkDescription: My Company Private Test Network
+    nemesisGenerationHashSeed: 3EC4F5010EAD8F4439241F242611C292CE569587D571A80AD2E73511BE820387
+    epochAdjustment: 1626086470s
+    baseNamespace: symbol
+    nemesis:
+        mosaics:
+            -
+                name: gold
+faucetBalances:
+    - 449949995
+    - 750
+nodes:
+    -
+        number: 1
+        friendlyName: myc-demo-001
+        assembly: demo
+        hostname: myc-demo-001.mycompany.com
+        customPreset:
+            privateKeySecurityMode: PROMPT_MAIN_TRANSPORT
+            nodes:
+                -
+                    friendlyName: myc-demo-001
+                    host: myc-demo-001.mycompany.com
+                    voting: false
+                    harvesting: true
+                    dockerComposeDebugMode: false
+                    brokerDockerComposeDebugMode: false
+            faucets:
+                -
+                    compose:
+                        environment:
+                            DEFAULT_NODE_CLIENT: https://myc-demo-001.mycompany.com:3001
+                            EXPLORER_URL: http://myc-demo-001.mycompany.com:90
+        nickName: demo
+        nodeType: HarvestingDemo
+        balances:
+            - 1000000
+            - 150
+        addresses:
+            name: node
+            friendlyName: myc-demo-001
+            roles: Peer,Api
+            main:
+                publicKey: 20E65FFE1DAE30CBE739281B21DA37D16035BDA295E8E9E688C6E8BE80A3C832
+                address: TCY3K73RZFLZWXJSNXG6TNBVL24FI2BQDMN36CI
+            transport:
+                publicKey: E88A74507C4DB5BF2651A0EE0103C08D9FEB21C0F4687669B1DED856A1917753
+                address: TCMKUSWWAO5EODOBG7CFGSQMODRJE42FYG35XTY
+            remote:
+                publicKey: BD87D72C95A35CEB6F373A9096614010A7D6CCFF888B5172F30B1EFB65C5ED6C
+                address: TASQG5NECDVGX7ETOJ2QN32F5HVJR2EFQQXHWHA
+            vrf:
+                publicKey: 39E2211F6BF3FAEEFFBF19F74A66E808F2961FCF36986B505D06AFCA4C6AED94
+                address: TDPTKQMPFDWXE5A37BGBBNHEXSMF6T2URTT2NBQ
+    -
+        number: 2
+        friendlyName: myc-dual-001
+        assembly: dual
+        hostname: myc-dual-001.mycompany.com
+        customPreset:
+            privateKeySecurityMode: PROMPT_MAIN_TRANSPORT
+            nodes:
+                -
+                    friendlyName: myc-dual-001
+                    host: myc-dual-001.mycompany.com
+                    voting: false
+                    harvesting: true
+                    dockerComposeDebugMode: false
+                    brokerDockerComposeDebugMode: false
+        nickName: dual
+        nodeType: HarvestingDual
+        balances:
+            - 3000000
+            - 150
+        addresses:
+            name: node
+            friendlyName: myc-dual-001
+            roles: Peer,Api
+            main:
+                publicKey: C586A1C00781CB6A2F9E34734415434AC5E3CFBF19B4F5B08CA9662E576E1B16
+                address: TCLW366IOBT65NWYC3OOTR6TZNWNJTDMBPZ44AA
+            transport:
+                publicKey: 4DB6EA7050A3266318D0FFA9421F6BC8EBC535FB209AE70B0925052BEF73150D
+                address: TCSSNE2CKQ2525URCJGLGUS5AYHH5PWO6CKNELY
+            remote:
+                publicKey: C8EC3989C1F58CDE40F6C91EF50CF7231D2E5EC6ABFEA09779D8123FEED97479
+                address: TDC7DAGNBI6QD5SUSKXVM5KDEUK5BXDUKO4OYMA
+            vrf:
+                publicKey: FDDCD1A69CD249799D20B5BD29A825BA7D3AB4970C3837B93A9276A9911D4ED8
+                address: TBL63KUN3FKYZPH27EAEXZAWKWO2YYEPASWNNAA
+    -
+        number: 3
+        friendlyName: myc-dual-002
+        assembly: dual
+        hostname: myc-dual-002.mycompany.com
+        customPreset:
+            privateKeySecurityMode: PROMPT_MAIN_TRANSPORT
+            nodes:
+                -
+                    friendlyName: myc-dual-002
+                    host: myc-dual-002.mycompany.com
+                    voting: false
+                    harvesting: true
+                    dockerComposeDebugMode: false
+                    brokerDockerComposeDebugMode: false
+        nickName: dual
+        nodeType: HarvestingDual
+        balances:
+            - 3000000
+            - 150
+        addresses:
+            name: node
+            friendlyName: myc-dual-002
+            roles: Peer,Api
+            main:
+                publicKey: 0BC659BAB271BB85054996E33E681FF2D90D2782A1D87E753AA0B47BD2DB1EC7
+                address: TABUYABXNF7T7QASOBSOAYVGYSV5UCIZ722YTXY
+            transport:
+                publicKey: AD62D7BF5553A004B36A0CF8A1290BDD52B1BF61AA6E1EDB70E71C5E5C38D4EC
+                address: TB6DUYERSLCCPZICMLEL3KLBLHFGA75RCESYTJA
+            remote:
+                publicKey: 410688D11175AD8601AD7F043C16B47931AB6C130BA01E85CAC5C8CCF8AA01FA
+                address: TBEZ52HD2ZFSPHJWEUZGQRLXSYTVNB4PKX6JFCY
+            vrf:
+                publicKey: 53A1D55F71F744624DE9AA968CFAAC4CD3704DEE0901E1A8BC400CEA6F406609
+                address: TDRPD3HZ3TEWTZYXOWWYUQLJAGJTBPBSFTIGYGI
+    -
+        number: 4
+        friendlyName: myc-peer-001
+        assembly: peer
+        hostname: myc-peer-001.mycompany.com
+        customPreset:
+            privateKeySecurityMode: PROMPT_MAIN_TRANSPORT
+            nodes:
+                -
+                    friendlyName: myc-peer-001
+                    host: myc-peer-001.mycompany.com
+                    voting: true
+                    harvesting: false
+                    dockerComposeDebugMode: false
+                    brokerDockerComposeDebugMode: false
+        nickName: peer
+        nodeType: VotingNonHarvestingPeer
+        balances:
+            - 51000000
+            - 0
+        addresses:
+            name: node
+            friendlyName: myc-peer-001
+            roles: Peer,Voting
+            main:
+                publicKey: 1D3B237B3E1F7CA9594492D6DF2282ABB25FB5DE326AF363A9EDF6DAB52182D5
+                address: TAWZFKSW7CEO652WT4WUQJ5O4JPRUAF57RY3OUQ
+            transport:
+                publicKey: 90D7E06FAA648EDA9586C963142E279BCADC1D9C5C9B6FDB9ECC829894C9B026
+                address: TD4PBVSPXOTTCDFSGUXL6ULAZEJ2IGO3WJYZTYI
+            remote:
+                publicKey: 7D104AE5FCABEBE1270921C4FD5B763585C509278D094CE2983D9552DBEF4731
+                address: TBYIFYCR4GONYXUFYSQC4LIJMBT7EVIPZABJUBY
+            voting:
+                -
+                    publicKey: 62DAAF436746F134823E61E0F22ED2397F22CF8297BC7E81F706D402D884283F
+                    startEpoch: 1
+                    endEpoch: 720
+                    filename: private_key_tree1.dat
+    -
+        number: 5
+        friendlyName: myc-peer-002
+        assembly: peer
+        hostname: myc-peer-002.mycompany.com
+        customPreset:
+            privateKeySecurityMode: PROMPT_MAIN_TRANSPORT
+            nodes:
+                -
+                    friendlyName: myc-peer-002
+                    host: myc-peer-002.mycompany.com
+                    voting: true
+                    harvesting: false
+                    dockerComposeDebugMode: false
+                    brokerDockerComposeDebugMode: false
+        nickName: peer
+        nodeType: VotingNonHarvestingPeer
+        balances:
+            - 51000000
+            - 0
+        addresses:
+            name: node
+            friendlyName: myc-peer-002
+            roles: Peer,Voting
+            main:
+                publicKey: 59EDCEF11D92B7E076C366389387B72EF75CD53557D58DF42CFABCCA3BCABAF8
+                address: TDR3Y744I2VQUCFJSDQR7UJTHGE2M7HTQA5PA4Q
+            transport:
+                publicKey: EF09D2B6F1F0C4CB99DDD8015966E0E8869E9113FFD2389A87A1ACFA7461EC0A
+                address: TCM5MET5D6UPOH63BRWHA6E477DZFAJFINCHT4A
+            remote:
+                publicKey: 0707C1402585AD3ADAD4ACEF6990EF40031A61B25529B4581FDD62BAFF56FB27
+                address: TCTHKBFSPZX3CPEJXHR5Q4NGWIRMQJLC4GN7THY
+            voting:
+                -
+                    publicKey: 3A0401E345F05F5600123787432014D1B7A269BAAB95FE92F39543E36D3802F9
+                    startEpoch: 1
+                    endEpoch: 720
+                    filename: private_key_tree1.dat
+    -
+        number: 6
+        friendlyName: myc-beacon-001
+        assembly: peer
+        hostname: myc-beacon-001.mycompany.com
+        customPreset:
+            privateKeySecurityMode: PROMPT_MAIN_TRANSPORT
+            nodes:
+                -
+                    friendlyName: myc-beacon-001
+                    host: myc-beacon-001.mycompany.com
+                    voting: true
+                    harvesting: true
+                    dockerComposeDebugMode: false
+                    brokerDockerComposeDebugMode: false
+        nickName: beacon
+        nodeType: VotingPeer
+        balances:
+            - 3000000
+            - 150
+        addresses:
+            name: node
+            friendlyName: myc-beacon-001
+            roles: Peer,Voting
+            main:
+                publicKey: D8B3725DD88FB9775FCFD39EE99E70149CEB7D5CDC8126714E789186F5590661
+                address: TDFR2TINE3MZL7FMECURZHX7SSQBWMCPYWYXZLY
+            transport:
+                publicKey: 685D8CD4B350FAE616618E34F4B3256C4BEBB502835A311CB0CE00F4DDFF460E
+                address: TD57XO5WMAOD4KWO4OSRDBKOAQ2OERYUG5NGOJY
+            remote:
+                publicKey: EC56C73185D71596010614E6970DC36FE61B1E204184AC2D8F43399D9AF13931
+                address: TCLHTXNMPXKB2B24KZWLIIBWVB23ZFVPMXV6V2Q
+            vrf:
+                publicKey: F4AEF41DCC2B0F217185530F551FDE3CC14F7AB2039B6CBFCE13FB14432998AD
+                address: TA3NZOC4KDDFUWXMG3KDDADXBTIT7GPK4VRH43I
+            voting:
+                -
+                    publicKey: 5B6AD4D8F6006131D053A1FF6E72F5F08514C2BBBE4D38FB9737ECF1C601CDAF
+                    startEpoch: 1
+                    endEpoch: 720
+                    filename: private_key_tree1.dat
+nemesisSeedFolder: nemesis-seed
