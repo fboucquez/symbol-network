@@ -9,7 +9,7 @@
 <a href="https://opensource.org/licenses/Apache-2.0"><img src="https://img.shields.io/badge/License-Apache%202.0-blue.svg" alt="License"></a>
 <a href="https://github.com/fboucquez/symbol-network/actions/workflows/build.yml"><img src="https://github.com/fboucquez/symbol-network/actions/workflows/build.yml/badge.svg" alt="Build"></a>
 <a href="https://coveralls.io/github/fboucquez/symbol-network?branch=dev"><img src="https://coveralls.io/repos/github/fboucquez/symbol-network/badge.svg?branch=dev" alt="Coverage Status"></a>
-<a href="../../"><img src="https://img.shields.io/badge/api-doc-blue.svg" alt="Api Doc"></a></p>
+<a href="https://fboucquez.github.io/symbol-network/"><img src="https://img.shields.io/badge/api-doc-blue.svg" alt="Api Doc"></a></p>
 <!-- toc -->
 <ul>
 <li><a href="#symbol-network">symbol-network</a></li>
@@ -17,8 +17,9 @@
 <li><a href="#requirements">Requirements</a></li>
 <li><a href="#installation">Installation</a></li>
 <li><a href="#usage">Usage</a></li>
-<li><a href="#command-topics">Command Topics</a></li>
-<li><a href="#development">Development</a><!-- tocstop --></li>
+<li><a href="#development">Development</a></li>
+<li><a href="#support">Support</a></li>
+<li><a href="#command-topics">Command Topics</a><!-- tocstop --></li>
 </ul>
 
 <a href="#why-this-tool" id="why-this-tool" style="color: inherit; text-decoration: none;">
@@ -42,13 +43,12 @@
 </a>
 <p>Before installing this tool, you need to install the symbol-bootstrap cli first.
 Please follow the Please follow the <a href="https://github.com/fboucquez/symbol-bootstrap#installation">instructions</a>.</p>
-<p>It&#39;s recommended to run the commands from en empty working dir.</p>
 <!-- usage -->
 <pre><code class="language-sh-session">$ npm install -g symbol-network
 $ symbol-network COMMAND
 running command...
 $ symbol-network (-v|--version|version)
-symbol-network/0.0.1 linux-x64 node-v12.22.1
+symbol-network/0.0.1 linux-x64 node-v12.18.3
 $ symbol-network --help [COMMAND]
 USAGE
   $ symbol-network COMMAND
@@ -81,6 +81,33 @@ $ symbol-network init
 <li><code>nemesis-target</code>: The target of the nemesis node. You can use this initial node to try the network before deploying the final nodes.</li>
 <li><code>nemesis-seed</code>: The seed folder copied from the <code>nemesis-target</code>. You can share with other members that want to connect to your network.</li>
 </ul>
+
+<a href="#development" id="development" style="color: inherit; text-decoration: none;">
+  <h1>Development</h1>
+</a>
+<p>If you want to contribute to this tool, clone this repo, and run:</p>
+<pre><code class="language-shell"><span class="hl-0">npm install -g</span>
+</code></pre>
+<p>Then, <code>symbol-network</code> runs from the source code. You can now try your features after changing the code.</p>
+<p>Pull Requests are appreciated! Please follow the contributing <a href="CONTRIBUTING.md">guidelines</a>.</p>
+<p>Note: cloning this repo is only for people that want to tune the tool in a way it cannot be configured. If this is your case, please provide a feature request.</p>
+<p>General users should install this tool like any other node module.</p>
+
+<a href="#code-style" id="code-style" style="color: inherit; text-decoration: none;">
+  <h2>Code style</h2>
+</a>
+<p>To format the source code, verify/fix lint issues, and generate the commands docs, run:</p>
+<pre><code class="language-shell"><span class="hl-0">npm run style:fix</span>
+</code></pre>
+
+<a href="#support" id="support" style="color: inherit; text-decoration: none;">
+  <h1>Support</h1>
+</a>
+<p>Symbol Network is a personal project maintained on my free time.</p>
+<p>If you like it, please consider supporting it by delegating your Symbol account to my <a href="http://symbol-node-dual-1.tawa.solutions:3000/node/info">node</a>:</p>
+<pre><code><span class="hl-1">name</span><span class="hl-0">: </span><span class="hl-2">symbol</span><span class="hl-0">-</span><span class="hl-2">node</span><span class="hl-0">-</span><span class="hl-2">dual</span><span class="hl-0">-1.</span><span class="hl-2">tawa</span><span class="hl-0">.</span><span class="hl-2">solutions</span><br/><span class="hl-1">publicKey</span><span class="hl-0">: 6</span><span class="hl-3">DB275B83F4839768821FF621DD90358F99A84EC61EB7DE1F6947E5B0926B9BB</span>
+</code></pre>
+<p>If you don&#39;t like it, let me know by creating issues on GitHub. Pull Requests are welcome!</p>
 <!-- commands -->
 
 <a href="#command-topics" id="command-topics" style="color: inherit; text-decoration: none;">
@@ -100,16 +127,4 @@ $ symbol-network init
 <li><a href="docs/verify.md"><code>symbol-network verify</code></a> - It tests the installed software in the current computer reporting if there is any missing dependency, invalid version, or software related issue.</li>
 </ul>
 <!-- commandsstop -->
-
-
-<a href="#development" id="development" style="color: inherit; text-decoration: none;">
-  <h1>Development</h1>
-</a>
-<p>If you want to contribute to this tool, clone this repo, and run:</p>
-<pre><code><span class="hl-0">npm</span><span class="hl-1"> </span><span class="hl-0">install</span><span class="hl-1"> -</span><span class="hl-0">g</span>
-</code></pre>
-<p>Then, <code>symbol-network</code> runs from the source code. You can now try your features after changing the code.</p>
-<p>Pull Requests are appreciated! Please follow the contributing <a href="../../CONTRIBUTING.md">guidelines</a>.</p>
-<p>Note: cloning this repo is only for people that want to tune the tool in a way it cannot be configured. If this is your case, please provide a feature request.</p>
-<p>General users should install this tool like any other node module.</p>
 </div></div><div class="col-4 col-menu menu-sticky-wrap menu-highlight"><nav class="tsd-navigation primary"><ul><li class="current"><a href="modules.html">Exports</a></li></ul></nav><nav class="tsd-navigation secondary menu-sticky"><ul><li class="tsd-kind-enum"><a href="enums/Network.html" class="tsd-kind-icon">Network</a></li><li class="tsd-kind-enum"><a href="enums/NodeMetadataType.html" class="tsd-kind-icon">Node<wbr/>Metadata<wbr/>Type</a></li><li class="tsd-kind-enum"><a href="enums/RestProtocol.html" class="tsd-kind-icon">Rest<wbr/>Protocol</a></li><li class="tsd-kind-class"><a href="classes/InitFromFileService.html" class="tsd-kind-icon">Init<wbr/>From<wbr/>File<wbr/>Service</a></li><li class="tsd-kind-class"><a href="classes/InitService.html" class="tsd-kind-icon">Init<wbr/>Service</a></li><li class="tsd-kind-class"><a href="classes/LazyKeyStore.html" class="tsd-kind-icon">Lazy<wbr/>Key<wbr/>Store</a></li><li class="tsd-kind-class"><a href="classes/LocalFileKeyStore.html" class="tsd-kind-icon">Local<wbr/>File<wbr/>Key<wbr/>Store</a></li><li class="tsd-kind-class"><a href="classes/NetworkAccountResolver.html" class="tsd-kind-icon">Network<wbr/>Account<wbr/>Resolver</a></li><li class="tsd-kind-class"><a href="classes/NetworkCommandUtils.html" class="tsd-kind-icon">Network<wbr/>Command<wbr/>Utils</a></li><li class="tsd-kind-class"><a href="classes/NetworkConfigurationService.html" class="tsd-kind-icon">Network<wbr/>Configuration<wbr/>Service</a></li><li class="tsd-kind-class"><a href="classes/NetworkGenesisService.html" class="tsd-kind-icon">Network<wbr/>Genesis<wbr/>Service</a></li><li class="tsd-kind-class"><a href="classes/NetworkHealthCheckService.html" class="tsd-kind-icon">Network<wbr/>Health<wbr/>Check<wbr/>Service</a></li><li class="tsd-kind-class"><a href="classes/NetworkLinkService.html" class="tsd-kind-icon">Network<wbr/>Link<wbr/>Service</a></li><li class="tsd-kind-class"><a href="classes/NetworkService.html" class="tsd-kind-icon">Network<wbr/>Service</a></li><li class="tsd-kind-class"><a href="classes/NetworkUtils.html" class="tsd-kind-icon">Network<wbr/>Utils</a></li><li class="tsd-kind-class"><a href="classes/NetworkVotingKeyFileProvider.html" class="tsd-kind-icon">Network<wbr/>Voting<wbr/>Key<wbr/>File<wbr/>Provider</a></li><li class="tsd-kind-class"><a href="classes/NodeMetadataUtils.html" class="tsd-kind-icon">Node<wbr/>Metadata<wbr/>Utils</a></li><li class="tsd-kind-class"><a href="classes/Report.html" class="tsd-kind-icon">Report</a></li><li class="tsd-kind-interface"><a href="interfaces/BalanceConfigAccount.html" class="tsd-kind-icon">Balance<wbr/>Config<wbr/>Account</a></li><li class="tsd-kind-interface"><a href="interfaces/BasicNetworkFile.html" class="tsd-kind-icon">Basic<wbr/>Network<wbr/>File</a></li><li class="tsd-kind-interface"><a href="interfaces/CosignerAccount.html" class="tsd-kind-icon">Cosigner<wbr/>Account</a></li><li class="tsd-kind-interface"><a href="interfaces/CosignerAccountInput.html" class="tsd-kind-icon">Cosigner<wbr/>Account<wbr/>Input</a></li><li class="tsd-kind-interface"><a href="interfaces/CosignerPerson.html" class="tsd-kind-icon">Cosigner<wbr/>Person</a></li><li class="tsd-kind-interface"><a href="interfaces/CosignerPersonInput.html" class="tsd-kind-icon">Cosigner<wbr/>Person<wbr/>Input</a></li><li class="tsd-kind-interface"><a href="interfaces/GenerateNemesisParams.html" class="tsd-kind-icon">Generate<wbr/>Nemesis<wbr/>Params</a></li><li class="tsd-kind-interface"><a href="interfaces/HealthCheckParams.html" class="tsd-kind-icon">Health<wbr/>Check<wbr/>Params</a></li><li class="tsd-kind-interface"><a href="interfaces/InitServiceParams.html" class="tsd-kind-icon">Init<wbr/>Service<wbr/>Params</a></li><li class="tsd-kind-interface"><a href="interfaces/KeyStorage.html" class="tsd-kind-icon">Key<wbr/>Storage</a></li><li class="tsd-kind-interface"><a href="interfaces/KeyStore.html" class="tsd-kind-icon">Key<wbr/>Store</a></li><li class="tsd-kind-interface"><a href="interfaces/LinkNodesParams.html" class="tsd-kind-icon">Link<wbr/>Nodes<wbr/>Params</a></li><li class="tsd-kind-interface tsd-has-type-parameter"><a href="interfaces/NetworkFile.html" class="tsd-kind-icon">Network<wbr/>File</a></li><li class="tsd-kind-interface tsd-has-type-parameter"><a href="interfaces/NetworkInputFile.html" class="tsd-kind-icon">Network<wbr/>Input<wbr/>File</a></li><li class="tsd-kind-interface"><a href="interfaces/NodeInformation.html" class="tsd-kind-icon">Node<wbr/>Information</a></li><li class="tsd-kind-interface"><a href="interfaces/NodeTypeInput.html" class="tsd-kind-icon">Node<wbr/>Type<wbr/>Input</a></li><li class="tsd-kind-interface"><a href="interfaces/NodeTypeMetadata.html" class="tsd-kind-icon">Node<wbr/>Type<wbr/>Metadata</a></li><li class="tsd-kind-interface"><a href="interfaces/ReportLine.html" class="tsd-kind-icon">Report<wbr/>Line</a></li><li class="tsd-kind-interface"><a href="interfaces/StoredAccount.html" class="tsd-kind-icon">Stored<wbr/>Account</a></li><li class="tsd-kind-interface"><a href="interfaces/UpdateNodesParams.html" class="tsd-kind-icon">Update<wbr/>Nodes<wbr/>Params</a></li><li class="tsd-kind-type-alias"><a href="modules.html#NetworkAccountName" class="tsd-kind-icon">Network<wbr/>Account<wbr/>Name</a></li><li class="tsd-kind-type-alias"><a href="modules.html#TransactionInformation" class="tsd-kind-icon">Transaction<wbr/>Information</a></li><li class="tsd-kind-type-alias"><a href="modules.html#VotingKeyFileContent" class="tsd-kind-icon">Voting<wbr/>Key<wbr/>File<wbr/>Content</a></li><li class="tsd-kind-variable"><a href="modules.html#nodesMetadata" class="tsd-kind-icon">nodes<wbr/>Metadata</a></li><li class="tsd-kind-function"><a href="modules.html#toDescription" class="tsd-kind-icon">to<wbr/>Description</a></li><li class="tsd-kind-function"><a href="modules.html#toNetworkType" class="tsd-kind-icon">to<wbr/>Network<wbr/>Type</a></li></ul></nav></div></div></div><footer class="with-border-bottom"><div class="container"><h2>Legend</h2><div class="tsd-legend-group"><ul class="tsd-legend"><li class="tsd-kind-constructor tsd-parent-kind-class"><span class="tsd-kind-icon">Constructor</span></li><li class="tsd-kind-property tsd-parent-kind-class"><span class="tsd-kind-icon">Property</span></li><li class="tsd-kind-method tsd-parent-kind-class"><span class="tsd-kind-icon">Method</span></li></ul><ul class="tsd-legend"><li class="tsd-kind-property tsd-parent-kind-interface"><span class="tsd-kind-icon">Property</span></li><li class="tsd-kind-method tsd-parent-kind-interface"><span class="tsd-kind-icon">Method</span></li></ul><ul class="tsd-legend"><li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private property</span></li><li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private method</span></li></ul><ul class="tsd-legend"><li class="tsd-kind-property tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static property</span></li><li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static method</span></li></ul><ul class="tsd-legend"><li class="tsd-kind-method tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected method</span></li></ul></div><h2>Settings</h2><p>Theme <select id="theme"><option value="os">OS</option><option value="light">Light</option><option value="dark">Dark</option></select></p></div></footer><div class="container tsd-generator"><p>Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p></div><div class="overlay"></div><script src="assets/main.js"></script></body></html>
