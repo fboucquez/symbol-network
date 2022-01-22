@@ -138,7 +138,7 @@ export class NetworkGenesisService {
                     nemesisBalances.push({
                         mosaicIndex: mosaicIndex,
                         address: mainAccount.address.plain(),
-                        amount: parseInt(nodeBalance + NetworkUtils.zeroPad(0, divisibility)),
+                        amount: nodeBalance * 10 ** divisibility,
                     });
                 }
             });
@@ -213,7 +213,27 @@ export class NetworkGenesisService {
                     nemesisBalances.push({
                         mosaicIndex: mosaicIndex,
                         address: faucetAccount.address.plain(),
-                        amount: parseInt(faucetBalance + NetworkUtils.zeroPad(0, divisibility)),
+                        amount: faucetBalance * 10 ** divisibility,
+                    });
+                }
+            });
+        }
+
+        const additionalCurrencyDistributions = input.additionalCurrencyDistributions;
+        if (additionalCurrencyDistributions) {
+            nemesisPreset.mosaics.forEach((m, mosaicIndex) => {
+                const mosaicAdditionalCurrencyDistributions = additionalCurrencyDistributions[mosaicIndex];
+                if (mosaicAdditionalCurrencyDistributions) {
+                    const divisibility = nemesisPreset.mosaics[mosaicIndex].divisibility;
+                    if (divisibility == undefined) {
+                        throw new Error('Divisibility should be defined!!');
+                    }
+                    mosaicAdditionalCurrencyDistributions.forEach((distribution) => {
+                        nemesisBalances.push({
+                            mosaicIndex: mosaicIndex,
+                            address: distribution.address,
+                            amount: distribution.amount * 10 ** divisibility,
+                        });
                     });
                 }
             });

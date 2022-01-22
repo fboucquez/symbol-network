@@ -21,6 +21,7 @@ import {
     CommandUtils,
     ConfigLoader,
     CustomPreset,
+    DeepPartial,
     FileSystemService,
     Logger,
     LoggerFactory,
@@ -29,7 +30,8 @@ import {
     Preset,
     YamlUtils,
 } from 'symbol-bootstrap';
-import { Account, NetworkType } from 'symbol-sdk';
+import { CurrencyDistribution, MosaicPreset } from 'symbol-bootstrap/lib/model/ConfigPreset';
+import { Account, Address, NetworkType } from 'symbol-sdk';
 import {
     Network,
     NetworkConfigurationService,
@@ -97,6 +99,7 @@ export class InitService {
         if (!nemesisPreset) throw new Error('Network nemesis must be found!');
         if (!nemesisPreset.mosaics) throw new Error(`Network nemesis's mosaics must be found!`);
         let faucetBalances: number[] | undefined;
+        let additionalCurrencyDistributions: CurrencyDistribution[][] | undefined;
         let customNetworkPreset: CustomPreset | undefined = {};
         if (isNewNetwork) {
             customNetworkPreset = _.merge({ nemesis: { mosaics: [] } }, this.params.additionalNetworkPreset);
@@ -126,7 +129,7 @@ export class InitService {
                 'Enter the basename for the network aliases',
                 networkPreset.baseNamespace,
             );
-
+            additionalCurrencyDistributions = [];
             for (const [index, mosaic] of nemesisPreset.mosaics.entries()) {
                 const currencyType = index == 0 ? 'Network' : index == 1 ? 'Harvest' : 'Custom';
                 const name = await this.promptName(
@@ -134,9 +137,10 @@ export class InitService {
                     `Enter the alias for the ${currencyType} Currency`,
                     mosaic.name,
                 );
-                customNetworkPreset.nemesis!.mosaics!.push({
+                const mosaicPreset: DeepPartial<MosaicPreset> = {
                     name,
-                });
+                };
+                customNetworkPreset.nemesis!.mosaics!.push(mosaicPreset);
             }
 
             const nemesisSignerAccount = await this.promptPrivateKey(networkType, 'Nemesis Signer Account');
@@ -148,14 +152,19 @@ export class InitService {
             if (await this.confirm('Do you want to have a Faucet account?')) {
                 const faucetAccount = await this.promptPrivateKey(networkType, 'Faucet Account');
                 await keyStore.saveNetworkAccount(networkType, 'faucet', faucetAccount.privateKey);
-                for (const mosaic of nemesisPreset.mosaics) {
+                for (const [index, mosaic] of nemesisPreset.mosaics.entries()) {
+                    const name = customNetworkPreset.nemesis!.mosaics![index]?.name || mosaic.name;
                     const balance = await this.promptNumber(
                         'Balance',
-                        `What's the initial ${mosaic.name} balance for the Faucet Account ${faucetAccount.address.plain()}?`,
+                        `What's the initial ${name} coin balance for the Faucet Account ${faucetAccount.address.plain()}?`,
                         Math.floor(mosaic.supply / 100 / Math.pow(10, mosaic.divisibility)) * 5,
                     );
                     faucetBalances.push(balance);
                 }
+            }
+            for (const [index, mosaic] of nemesisPreset.mosaics.entries()) {
+                const name = customNetworkPreset.nemesis!.mosaics![index]?.name || mosaic.name;
+                additionalCurrencyDistributions.push(await this.promptDistribution(networkType, name));
             }
 
             const harvestNetworkFeeSinkAccount = await this.promptPrivateKey(networkType, 'Harvest Network Fee Sink Account');
@@ -194,6 +203,7 @@ export class InitService {
             networkType: networkType!,
             isNewNetwork: isNewNetwork,
             faucetBalances: faucetBalances,
+            additionalCurrencyDistributions: additionalCurrencyDistributions,
             nemesisSeedFolder: nemesisSeedFolder,
             nodeTypes: nodeTypes,
             customNetworkPreset: customNetworkPreset,
@@ -283,7 +293,7 @@ export class InitService {
                 ]);
                 nemesisSeedFolder = nemesisSeedFolderResponse.value;
                 try {
-                    await new FileSystemService(this.logger).validateSeedFolder(nemesisSeedFolder, '');
+                    new FileSystemService(this.logger).validateSeedFolder(nemesisSeedFolder, '');
                 } catch (e) {
                     console.log();
                     console.log(
@@ -450,6 +460,54 @@ export class InitService {
             Account.generateNewAccount(networkType),
             (enteredAccount) => `address ${enteredAccount.address.plain()} public key ${enteredAccount.publicKey}`,
         );
+    }
+
+    public async promptAddress(networkType: NetworkType, fieldName: string): Promise<Address> {
+        return this.confirmedPrompt<Address>(
+            fieldName,
+            async (currentValue): Promise<Address> => {
+                const { value } = await prompt([
+                    {
+                        name: 'value',
+                        message: `Enter a valid Symbol ${fieldName}`,
+                        type: 'input',
+                        default: currentValue?.plain(),
+                        validate: (value) => {
+                            try {
+                                const address = Address.createFromRawAddress(value);
+                                if (address.networkType != networkType) {
+                                    return `it's not for the right network`;
+                                }
+                                return true;
+                            } catch (e) {
+                                return `it is not a valid address. ${NetworkUtils.getMessage(e)}`;
+                            }
+                        },
+                    },
+                ]);
+                return Address.createFromRawAddress(value);
+            },
+            undefined,
+            (address) => `address ${address.plain()} `,
+        );
+    }
+
+    public async promptDistribution(networkType: NetworkType, mosaicName: string): Promise<CurrencyDistribution[]> {
+        const list: CurrencyDistribution[] = [];
+        console.log();
+        console.log(
+            `In additions to the node, faucet and founder accounts, you can include (opt-in) more accounts into the nemesis block by distributing ${mosaicName} coins.`,
+        );
+        while (await this.confirm(`Do you want to distribute coin ${mosaicName} to different accounts on the nemesis block?`, false)) {
+            const address = await this.promptAddress(networkType, 'distribution address');
+            const amount = await this.promptNumber(
+                'distribution amount',
+                `Enter how much ${mosaicName} you want to give to address ${address.plain()}`,
+                100,
+            );
+            list.push({ address: address.plain(), amount: amount });
+        }
+        return list;
     }
 
     public async generateRandomKey(fieldName: string, message: string, networkType: NetworkType): Promise<string> {

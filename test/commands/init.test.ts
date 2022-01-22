@@ -17,6 +17,7 @@
 import 'mocha';
 import { join } from 'path';
 import { FileSystemService, LoggerFactory, LogType } from 'symbol-bootstrap';
+import { Account, NetworkType } from 'symbol-sdk';
 import { InitService } from '../../src';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
@@ -51,6 +52,8 @@ describe('Init', () => {
 
     it('network2 init', async () => {
         // Given this prompts
+        const distributionAddress1 = Account.createFromPrivateKey(TestUtils.toKey('D1'), NetworkType.MAIN_NET).address.plain();
+        const distributionAddress2 = Account.createFromPrivateKey(TestUtils.toKey('D2'), NetworkType.MAIN_NET).address.plain();
         StdUtils.in([
             '\n',
             '\n',
@@ -63,19 +66,28 @@ describe('Init', () => {
             `${TestUtils.toKey('A')}`,
             '\n',
             '1626575785\n',
-            'pirate\n',
+            'pirate\n', //Mosaic 1
             'gold\n',
-            `${TestUtils.toKey('B')}`,
+            `${TestUtils.toKey('B')}`, // Nemesis signer.
             '\n',
-            `${TestUtils.toKey('C')}`,
+            `${TestUtils.toKey('C')}`, // Founder
             '\n',
             'Y\n',
-            `${TestUtils.toKey('D')}`,
+            `${TestUtils.toKey('D')}`, // Faucet
             '\n',
             '\n',
-            `${TestUtils.toKey('E')}\n`,
-            `${TestUtils.toKey('F')}\n`,
-            `${TestUtils.toKey('AA')}\n`,
+            'y\n', // Yes, enter distribution addresses
+            distributionAddress1,
+            '\n',
+            `500\n`,
+            'y\n', // Yes, enter distribution addresses
+            distributionAddress2,
+            '\n',
+            `100\n`,
+            'n\n', // No more distribution
+            `${TestUtils.toKey('E')}\n`, //sink
+            `${TestUtils.toKey('F')}\n`, //sink
+            `${TestUtils.toKey('AA')}\n`, //sink
             //First node
             `\n`,
             '2',
