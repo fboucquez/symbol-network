@@ -15,6 +15,7 @@
  */
 
 import { ConfigAccount, CustomPreset } from 'symbol-bootstrap';
+import { CurrencyDistribution } from 'symbol-bootstrap/lib/model/ConfigPreset';
 import { NodeInformation, NodeMetadataType, RestProtocol } from './NodeInformation';
 
 export interface CosignerAccountInput {
@@ -63,7 +64,7 @@ export interface BasicNetworkFile {
     isNewNetwork: boolean;
     nemesisSeedFolder?: string;
     faucetBalances?: number[];
-
+    additionalCurrencyDistributions?: CurrencyDistribution[][];
     multisig?: {
         ownershipCount: number;
         cosigners: CosignerPerson[];

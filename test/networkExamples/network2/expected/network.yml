@@ -7,6 +7,14 @@ networkType: 104
 isNewNetwork: true
 faucetBalances:
     - 392146430
+additionalCurrencyDistributions:
+    -
+        -
+            address: NDUPFADIRKPB2QFAPKHGSA6RWDZ5M6SCYQ2VVNA
+            amount: 500
+        -
+            address: NBPVJT4IPIZ6X3BWEK3FLIDMAJXHSZ4R67Z2LZI
+            amount: 100
 customNetworkPreset:
     nemesis:
         mosaics:
