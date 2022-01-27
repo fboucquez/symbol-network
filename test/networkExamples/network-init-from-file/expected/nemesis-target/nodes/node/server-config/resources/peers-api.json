@@ -1,0 +1,16 @@
+{
+  "_info": "this file contains a list of api peers",
+  "knownPeers": [
+    {
+      "publicKey": "FD50B8E3B144EA244FBF7737F550BC8DD0C2650BBC1AADA833CA17FF8DBF329B",
+      "endpoint": {
+        "host": "myc-dual-002.mycompany.com",
+        "port": 7900
+      },
+      "metadata": {
+        "name": "myc-dual-002",
+        "roles": "Api,Peer,Voting"
+      }
+    }
+  ]
+}

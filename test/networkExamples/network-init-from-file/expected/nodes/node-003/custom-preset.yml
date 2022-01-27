@@ -1,0 +1,8 @@
+domain: mycompany.com
+faucets:
+    -
+        repeat: 1
+        compose:
+            environment:
+                FAUCET_PRIVATE_KEY: 000000000000000000000000000000000000000000000000000000000000000D
+nemesisSeedFolder: nemesis-seed

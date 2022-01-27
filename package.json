@@ -63,7 +63,7 @@
         "inquirer": "^8.2.0",
         "lodash": "^4.17.21",
         "remove": "^0.1.5",
-        "symbol-bootstrap": "^1.1.4-alpha-3f3b67b",
+        "symbol-bootstrap": "^1.1.4-alpha-e63d2e2",
         "symbol-sdk": "^1.0.3",
         "tslib": "^2.3.1",
         "winston": "^3.4.0"

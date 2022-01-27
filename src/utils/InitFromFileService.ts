@@ -26,13 +26,13 @@ export class InitFromFileService {
 
         const logger = LoggerFactory.getLogger(LogType.Console);
 
-        console.log();
-        console.log(`Welcome to the ${NetworkCommandUtils.CLI_TOOL} tool. `);
-        console.log();
-        console.log('This tool will allow you creating a new network or a node cluster for an existing network.');
-        console.log();
-        console.log('The init.yml file has been provided. Cli will automatically generate the required information.');
-        console.log();
+        this.logger.info('');
+        this.logger.info(`Welcome to the ${NetworkCommandUtils.CLI_TOOL} tool. `);
+        this.logger.info('');
+        this.logger.info('This tool will allow you creating a new network or a node cluster for an existing network.');
+        this.logger.info('');
+        this.logger.info('The init.yml file has been provided. Cli will automatically generate the required information.');
+        this.logger.info('');
 
         const networkInput: NetworkInputFile = await NetworkUtils.loadNetworkInput(this.workingDir);
 
@@ -69,18 +69,18 @@ export class InitFromFileService {
                 networkInput,
                 customNetworkPresetFile,
             );
-            console.log();
-            console.log(
+            this.logger.info('');
+            this.logger.info(
                 `The initial network preset ${customNetworkPresetFile} for the new network has been stored. This file will be updated in the following steps.`,
             );
-            console.log();
+            this.logger.info('');
         }
 
         await NetworkUtils.saveNetworkInput(this.workingDir, networkInput);
-        console.log();
-        console.log(`You have created the initial ${networkInputFile}. Have a look and once once you are happy, run: `);
-        console.log();
-        console.log(`$ ${NetworkCommandUtils.CLI_TOOL} expandNodes`);
-        console.log();
+        this.logger.info('');
+        this.logger.info(`You have created the initial ${networkInputFile}. Have a look and once once you are happy, run: `);
+        this.logger.info('');
+        this.logger.info(`$ ${NetworkCommandUtils.CLI_TOOL} expandNodes`);
+        this.logger.info('');
     }
 }

@@ -46,7 +46,7 @@ export class NetworkService {
         return new NetworkLinkService(this.logger, this.workingDir, keyStore).linkNodes(params);
     }
 
-    updateNodes(keyStore: KeyStore, params: UpdateNodesParams): Promise<void> {
-        return new NetworkConfigurationService(this.logger, this.workingDir, keyStore).updateNodes(params);
+    configureNodes(keyStore: KeyStore, params: UpdateNodesParams): Promise<void> {
+        return new NetworkConfigurationService(this.logger, this.workingDir, keyStore).configureNodes(params);
     }
 }

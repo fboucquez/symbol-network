@@ -1,0 +1,54 @@
+{
+  "peersApi": {
+    "defaultNode": "http://localhost:3000",
+    "nodes": [
+      "http://localhost:3000",
+      "https://myc-dual-001.mycompany.com:3001",
+      "https://myc-dual-002.mycompany.com:3001"
+    ]
+  },
+  "endpoints": {
+    "marketData": "https://min-api.cryptocompare.com/"
+  },
+  "networkConfig": {
+    "namespaceName": "pirate.gold",
+    "mosaicId": "5BF08CAE30599605",
+    "divisibility": "6",
+    "namespaceId": "F95F28D0A03774E5",
+    "networkIdentifier": 104
+  },
+  "footer": {
+    "link": [
+      {
+        "href": "https://nemflash.io/",
+        "text": "NEM News",
+        "icon": "IconNewspaper"
+      },
+      {
+        "href": "https://forum.nem.io/",
+        "text": "Forum",
+        "icon": "IconForum"
+      },
+      {
+        "href": "https://t.me/nemred",
+        "text": "Telegram",
+        "icon": "IconTelegram"
+      },
+      {
+        "href": "https://www.reddit.com/r/nem/",
+        "text": "Reddit",
+        "icon": "IconReddit"
+      },
+      {
+        "href": "https://github.com/nemtech",
+        "text": "Github",
+        "icon": "IconGithub"
+      },
+      {
+        "href": "http://localhost:100/",
+        "text": "Faucet",
+        "icon": "IconHomeCurrencyUsd"
+      }
+    ]
+  }
+}

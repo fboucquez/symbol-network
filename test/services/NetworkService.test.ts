@@ -66,7 +66,7 @@ describe('NetworkService', () => {
             composeUser: '1000:1000',
             password: false,
         });
-        await service.updateNodes(keyStore, {
+        await service.configureNodes(keyStore, {
             offline: true,
             nodePassword: undefined,
             composeUser: '1000:1000',
@@ -85,11 +85,15 @@ describe('NetworkService', () => {
         }
     };
 
-    it('network1 generation', async () => {
-        await networkGeneration('network1', false);
+    it('network-pre-created generation', async () => {
+        await networkGeneration('network-pre-created', false);
     });
 
-    it('network2 generation', async () => {
-        await networkGeneration('network2', true);
+    it('network-e2e generation', async () => {
+        await networkGeneration('network-e2e', true);
+    });
+
+    it('network-init-from-file generation', async () => {
+        await networkGeneration('network-init-from-file', true);
     });
 });

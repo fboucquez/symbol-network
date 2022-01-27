@@ -61,26 +61,26 @@ export class InitService {
         const customNetworkPresetFile = NetworkUtils.NETWORK_PRESET_FILE;
         const logger = LoggerFactory.getLogger(LogType.Console);
 
-        console.log();
-        console.log(`Welcome to the ${NetworkCommandUtils.CLI_TOOL} tool. `);
-        console.log();
-        console.log('This tool will allow you creating a new network or a node cluster for an existing network.');
+        this.logger.info('');
+        this.logger.info(`Welcome to the ${NetworkCommandUtils.CLI_TOOL} tool. `);
+        this.logger.info('');
+        this.logger.info('This tool will allow you creating a new network or a node cluster for an existing network.');
 
-        console.log();
-        console.log('First you need to decide if you are creating a new network or creating nodes to join an existing network.');
-        console.log();
+        this.logger.info('');
+        this.logger.info('First you need to decide if you are creating a new network or creating nodes to join an existing network.');
+        this.logger.info('');
 
         const isNewNetwork = await this.confirm('Are you creating a new network?');
         if (isNewNetwork) {
-            console.log();
-            console.log(
+            this.logger.info('');
+            this.logger.info(
                 'The new network will be based on an existing network. You can select an out-of-the box preset from Symbol Bootstrap or you can provide a custom network preset to be based one',
             );
-            console.log();
+            this.logger.info('');
         } else {
-            console.log();
-            console.log('The new nodes can join an existing public network or you can provide the custom network`s preset and seed.');
-            console.log();
+            this.logger.info('');
+            this.logger.info('The new nodes can join an existing public network or you can provide the custom network`s preset and seed.');
+            this.logger.info('');
         }
 
         const { preset, nemesisSeedFolder } = await this.promptPreset(isNewNetwork);
@@ -185,11 +185,11 @@ export class InitService {
                 customNetworkPresetFile,
             );
 
-            console.log();
-            console.log(
+            this.logger.info('');
+            this.logger.info(
                 `The initial network preset ${customNetworkPresetFile} for the new network has been stored. This file will be updated in the following steps.`,
             );
-            console.log();
+            this.logger.info('');
         }
 
         const nodeTypes = await this.promptNodeTypeInputList(nemesisPreset);
@@ -210,11 +210,11 @@ export class InitService {
         };
 
         await NetworkUtils.saveNetworkInput(this.workingDir, networkInput);
-        console.log();
-        console.log(`You have created the initial ${networkInputFile}. Have a look and once once you are happy, run: `);
-        console.log();
-        console.log(`$ ${NetworkCommandUtils.CLI_TOOL} expandNodes`);
-        console.log();
+        this.logger.info('');
+        this.logger.info(`You have created the initial ${networkInputFile}. Have a look and once once you are happy, run: `);
+        this.logger.info('');
+        this.logger.info(`$ ${NetworkCommandUtils.CLI_TOOL} expandNodes`);
+        this.logger.info('');
     }
 
     public async confirm(question: string, defaultValue = true): Promise<boolean> {
@@ -275,9 +275,9 @@ export class InitService {
 
                 customFile = customPresetResponse.value;
                 if (!existsSync(customFile)) {
-                    console.log();
-                    console.log(`Network file '${customFile}' does not exist! Please re-enter`);
-                    console.log();
+                    this.logger.info('');
+                    this.logger.info(`Network file '${customFile}' does not exist! Please re-enter`);
+                    this.logger.info('');
                     continue;
                 }
                 if (isNewNetwork) {
@@ -295,11 +295,11 @@ export class InitService {
                 try {
                     new FileSystemService(this.logger).validateSeedFolder(nemesisSeedFolder, '');
                 } catch (e) {
-                    console.log();
-                    console.log(
+                    this.logger.info('');
+                    this.logger.info(
                         `Network nemesis seed '${nemesisSeedFolder}' is not valid! Please re-enter: Error: ${NetworkUtils.getMessage(e)}`,
                     );
-                    console.log();
+                    this.logger.info('');
                     continue;
                 }
                 return {
@@ -350,10 +350,11 @@ export class InitService {
     public async promptNodeTypeInputList(nemesis: NemesisPreset): Promise<NodeTypeInput[]> {
         const list: NodeTypeInput[] = [];
         while (true) {
-            console.log();
-            console.log();
+            this.logger.info('');
+            this.logger.info('');
             const nodeType = await this.promptNodeType(`Select the node type you want to create`);
-            const nodeTypeName = nodesMetadata[nodeType].name;
+            const metadata = nodesMetadata[nodeType];
+            const nodeTypeName = metadata.name;
             const { total } = await prompt([
                 {
                     name: 'total',
@@ -368,7 +369,7 @@ export class InitService {
                         }
                         return true;
                     },
-                    default: 3,
+                    default: metadata.suggestedCount,
                 },
             ]);
 
@@ -376,22 +377,20 @@ export class InitService {
             if (!nemesis) {
                 throw new Error('Nemesis must be resolved!');
             }
-            for (const [index, mosaic] of nemesis.mosaics.entries()) {
-                const balance = await this.promptNumber(
-                    'Balance',
-                    `What's the initial ${mosaic.name} balance for the ${nodeTypeName} nodes?`,
-                    nodesMetadata[nodeType].balances[index],
-                );
-                balances.push(balance);
+            if (metadata.balances.length > 0) {
+                for (const [index, mosaic] of nemesis.mosaics.entries()) {
+                    const balance = await this.promptNumber(
+                        'Balance',
+                        `What's the initial ${mosaic.name} balance for the ${nodeTypeName} nodes?`,
+                        metadata.balances[index],
+                    );
+                    balances.push(balance);
+                }
             }
 
-            const nickName = await this.promptName(
-                `Nodes's Nick Name`,
-                'The nick name of the these nodes',
-                nodesMetadata[nodeType].nickName,
-            );
+            const nickName = await this.promptName(`Nodes's Nick Name`, 'The nick name of the these nodes', metadata.nickName);
 
-            const restProtocol = nodesMetadata[nodeType].api ? await this.promptRestProtocol() : undefined;
+            const restProtocol = metadata.api ? await this.promptRestProtocol() : undefined;
             const { confirmCreate } = await prompt([
                 {
                     default: true,
@@ -494,8 +493,8 @@ export class InitService {
 
     public async promptDistribution(networkType: NetworkType, mosaicName: string): Promise<CurrencyDistribution[]> {
         const list: CurrencyDistribution[] = [];
-        console.log();
-        console.log(
+        this.logger.info('');
+        this.logger.info(
             `In additions to the node, faucet and founder accounts, you can include (opt-in) more accounts into the nemesis block by distributing ${mosaicName} coins.`,
         );
         while (await this.confirm(`Do you want to distribute coin ${mosaicName} to different accounts on the nemesis block?`, false)) {
@@ -608,7 +607,7 @@ export class InitService {
             if (confirm) {
                 return value;
             }
-            console.log(`Please re-enter the ${fieldName}.`);
+            this.logger.info(`Please re-enter the ${fieldName}.`);
         }
     }
 

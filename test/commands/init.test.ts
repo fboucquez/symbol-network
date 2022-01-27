@@ -18,7 +18,7 @@ import 'mocha';
 import { join } from 'path';
 import { FileSystemService, LoggerFactory, LogType } from 'symbol-bootstrap';
 import { Account, NetworkType } from 'symbol-sdk';
-import { InitService } from '../../src';
+import { InitFromFileService, InitService } from '../../src';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 import { TestUtils } from '../services/TestUtils';
@@ -30,27 +30,7 @@ const logger = LoggerFactory.getLogger(LogType.Silent);
 const fileSystemService = new FileSystemService(logger);
 
 describe('Init', () => {
-    async function generateInit(name: string) {
-        const target = `target/${name}`;
-        await fileSystemService.deleteFolder(target);
-        await fileSystemService.mkdir(target);
-        await new InitService(logger, target, {
-            ready: true,
-            showPrivateKeys: true,
-            noPassword: true,
-            additionalNetworkPreset: {
-                reportBootstrapVersion: '1.1.0',
-                peersP2PListLimit: 10000,
-                peersApiListLimit: 10000,
-                restDeploymentToolVersion: '1.0.8',
-                restDeploymentToolLastUpdatedDate: '2021-07-05',
-            },
-        }).execute();
-        const fromExpectedFolder = join('test', 'networkExamples', name, 'input');
-        await TestUtils.compareDirectories(logger, fromExpectedFolder, target);
-    }
-
-    it('network2 init', async () => {
+    it('network e2e init', async () => {
         // Given this prompts
         const distributionAddress1 = Account.createFromPrivateKey(TestUtils.toKey('D1'), NetworkType.MAIN_NET).address.plain();
         const distributionAddress2 = Account.createFromPrivateKey(TestUtils.toKey('D2'), NetworkType.MAIN_NET).address.plain();
@@ -112,6 +92,40 @@ describe('Init', () => {
             `N\n`, //finish
         ]);
         // run and expect generated
-        await generateInit('network2');
+        const name = 'network-e2e';
+        const target = `target/${name}`;
+        const fromExpectedFolder = join('test', 'networkExamples', name, 'input');
+        await fileSystemService.deleteFolder(target);
+        await fileSystemService.mkdir(target);
+        await new InitService(logger, target, {
+            ready: true,
+            showPrivateKeys: true,
+            noPassword: true,
+            additionalNetworkPreset: {
+                reportBootstrapVersion: '1.1.0',
+                peersP2PListLimit: 10000,
+                peersApiListLimit: 10000,
+                restDeploymentToolVersion: '1.0.8',
+                restDeploymentToolLastUpdatedDate: '2021-07-05',
+            },
+        }).execute();
+        await TestUtils.compareDirectories(logger, fromExpectedFolder, target);
+    });
+
+    it('network init-from-file', async () => {
+        // run and expect generated
+
+        const name = 'network-init-from-file';
+        const target = `target/${name}`;
+        await fileSystemService.deleteFolder(target);
+        await fileSystemService.mkdir(target);
+        const fromExpectedFolder = join('test', 'networkExamples', name, 'input');
+        await fileSystemService.copyDir(fromExpectedFolder, target, ['custom-network-preset.yml']);
+        await new InitFromFileService(logger, target, {
+            ready: true,
+            showPrivateKeys: true,
+            noPassword: true,
+        }).execute();
+        await TestUtils.compareDirectories(logger, fromExpectedFolder, target);
     });
 });

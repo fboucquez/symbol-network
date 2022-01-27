@@ -54,6 +54,11 @@ export default class ListServices extends Command {
                 logger.info(` - Explorer - ${NetworkUtils.resolveExplorerUrl(hostname)}`);
                 logger.info(` - Faucet - ${NetworkUtils.resolveFaucetUrl(hostname)}`);
             }
+            if (metadata.services) {
+                //pretty hardcoded!
+                logger.info(` - Explorer - ${'https://explorer.' + input.domain}`);
+                logger.info(` - Faucet - ${'https://faucet.' + input.domain}`);
+            }
         });
     }
 }

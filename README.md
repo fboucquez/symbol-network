@@ -32,7 +32,7 @@ If you are creating a Symbol node for the first time, please have look at the [s
 -   Node 12.0.0+
 -   Docker 18.3.0+
 -   Docker Compose 1.25.0+
--   Symbol Bootstrap 1.1.3+.
+-   Symbol Bootstrap 1.1.4+.
 
 # Installation
 
@@ -45,7 +45,7 @@ $ npm install -g symbol-network
 $ symbol-network COMMAND
 running command...
 $ symbol-network (-v|--version|version)
-symbol-network/0.0.1 linux-x64 node-v12.18.3
+symbol-network/0.0.1 linux-x64 node-v12.22.1
 $ symbol-network --help [COMMAND]
 USAGE
   $ symbol-network COMMAND
