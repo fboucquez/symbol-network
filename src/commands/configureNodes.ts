@@ -58,6 +58,6 @@ This command can be executed multiple times if you need to update or upgrade you
         const workingDir = Constants.defaultWorkingDir;
         const keyStore = await NetworkCommandUtils.createStore(flags, logger, true, workingDir);
         const nodePassword = await NetworkCommandUtils.resolveNodePassword(flags, logger);
-        await new NetworkService(logger, workingDir).updateNodes(keyStore, { nodePassword, offline: flags.offline, zip: flags.zip });
+        await new NetworkService(logger, workingDir).configureNodes(keyStore, { nodePassword, offline: flags.offline, zip: flags.zip });
     }
 }

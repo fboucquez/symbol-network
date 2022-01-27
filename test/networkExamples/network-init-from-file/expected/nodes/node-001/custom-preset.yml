@@ -1,0 +1,16 @@
+privateKeySecurityMode: PROMPT_MAIN_TRANSPORT
+nodes:
+    -
+        friendlyName: myc-dual-001
+        host: myc-dual-001.mycompany.com
+        voting: true
+        harvesting: true
+        dockerComposeDebugMode: false
+        brokerDockerComposeDebugMode: false
+gateways:
+    -
+        openPort: false
+httpsProxies:
+    -
+        excludeDockerService: false
+nemesisSeedFolder: nemesis-seed

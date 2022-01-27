@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import { CustomPreset, NodeAccount as NodeAddresses } from 'symbol-bootstrap';
+import { Assembly, CustomPreset, NodeAccount as NodeAddresses } from 'symbol-bootstrap';
 
 export enum NodeMetadataType {
     VotingPeer = 'VotingPeer',
@@ -24,6 +24,7 @@ export enum NodeMetadataType {
     HarvestingDual = 'HarvestingDual',
     HarvestingDemo = 'HarvestingDemo',
     VotingNonHarvestingPeer = 'VotingNonHarvestingPeer',
+    Services = 'Services',
     Peer = 'Peer',
     Api = 'Api',
 }
@@ -51,8 +52,10 @@ export interface NodeTypeMetadata {
     harvesting: boolean;
     voting: boolean;
     demo: boolean;
+    services?: boolean;
     nickName: string;
     assembly?: string;
+    suggestedCount: number;
 }
 
 export const nodesMetadata: Record<NodeMetadataType, NodeTypeMetadata> = {
@@ -65,6 +68,7 @@ export const nodesMetadata: Record<NodeMetadataType, NodeTypeMetadata> = {
         api: false,
         peer: true,
         nickName: 'beacon',
+        suggestedCount: 3,
     },
     VotingApi: {
         name: 'Voting Api',
@@ -75,6 +79,7 @@ export const nodesMetadata: Record<NodeMetadataType, NodeTypeMetadata> = {
         api: false,
         peer: true,
         nickName: 'beacon',
+        suggestedCount: 3,
     },
     VotingDual: {
         name: 'Voting Dual',
@@ -85,6 +90,7 @@ export const nodesMetadata: Record<NodeMetadataType, NodeTypeMetadata> = {
         api: true,
         peer: true,
         nickName: 'dual',
+        suggestedCount: 3,
     },
     HarvestingPeer: {
         name: 'Harvesting Peer',
@@ -95,6 +101,7 @@ export const nodesMetadata: Record<NodeMetadataType, NodeTypeMetadata> = {
         api: false,
         peer: true,
         nickName: 'beacon',
+        suggestedCount: 3,
     },
     HarvestingDual: {
         name: 'Harvesting Dual',
@@ -105,6 +112,7 @@ export const nodesMetadata: Record<NodeMetadataType, NodeTypeMetadata> = {
         api: true,
         peer: true,
         nickName: 'dual',
+        suggestedCount: 3,
     },
 
     HarvestingDemo: {
@@ -117,6 +125,7 @@ export const nodesMetadata: Record<NodeMetadataType, NodeTypeMetadata> = {
         peer: true,
         assembly: 'demo',
         nickName: 'demo',
+        suggestedCount: 1,
     },
     Peer: {
         name: 'Peer',
@@ -127,6 +136,20 @@ export const nodesMetadata: Record<NodeMetadataType, NodeTypeMetadata> = {
         api: false,
         peer: true,
         nickName: 'peer',
+        suggestedCount: 3,
+    },
+    Services: {
+        name: 'Services',
+        balances: [],
+        voting: false,
+        harvesting: false,
+        demo: false,
+        api: false,
+        peer: false,
+        services: true,
+        nickName: 'services',
+        assembly: Assembly.services,
+        suggestedCount: 1,
     },
     Api: {
         name: 'Api',
@@ -137,6 +160,7 @@ export const nodesMetadata: Record<NodeMetadataType, NodeTypeMetadata> = {
         api: true,
         peer: false,
         nickName: 'api',
+        suggestedCount: 3,
     },
     VotingNonHarvestingPeer: {
         name: 'Non Harvesting Voting Peer',
@@ -147,6 +171,7 @@ export const nodesMetadata: Record<NodeMetadataType, NodeTypeMetadata> = {
         api: false,
         peer: true,
         nickName: 'peer',
+        suggestedCount: 3,
     },
 };
 

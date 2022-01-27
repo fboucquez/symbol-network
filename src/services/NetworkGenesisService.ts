@@ -94,6 +94,9 @@ export class NetworkGenesisService {
         const founderAccount = await this.keyStore.getNetworkAccount(networkType, 'founder', true);
         for (const node of input.nodes) {
             const metadata = nodesMetadata[node.nodeType];
+            if (metadata.services) {
+                continue;
+            }
             const hostname = node.hostname;
             const nodeId = `node-${NetworkUtils.zeroPad(node.number, 3)}`;
             this.logger.info(`Generating transactions and balances for node ${nodeId} ${hostname}`);
@@ -270,8 +273,8 @@ export class NetworkGenesisService {
         };
         this.logger.info(`Generating nemesis block...`);
         this.logger.info('');
-        const node = input.nodes.find(async (node) => {
-            const metadata = nodesMetadata[node.nodeType];
+        const node = input.nodes.find(async (n) => {
+            const metadata = nodesMetadata[n.nodeType];
             return metadata.harvesting;
         });
         if (!node) {
@@ -292,6 +295,7 @@ export class NetworkGenesisService {
             customPresetObject: nemesisCustomPreset,
         });
         await service.compose({
+            offline: true,
             target: nemesisTargetFolder,
             user: composeUser || ConfigService.defaultParams.user,
             password: password || undefined,

@@ -25,9 +25,9 @@ import {
     CryptoUtils,
     CustomPreset,
     DeepPartial,
+    FaucetPreset,
     FileSystemService,
     Logger,
-    NodePreset,
     Password,
     PeerInfo,
     PrivateKeySecurityMode,
@@ -82,19 +82,21 @@ export class NetworkConfigurationService {
                 const metadata = nodesMetadata[nodeTypeInput.nodeType];
                 const assembly = NodeMetadataUtils.getAssembly(metadata);
 
-                const customPreset: CustomPreset = {
-                    privateKeySecurityMode: PrivateKeySecurityMode.PROMPT_MAIN_TRANSPORT,
-                    nodes: [
-                        {
-                            friendlyName: friendlyName,
-                            host: hostname,
-                            voting: metadata.voting,
-                            harvesting: metadata.harvesting,
-                            dockerComposeDebugMode: false,
-                            brokerDockerComposeDebugMode: false,
-                        },
-                    ],
-                };
+                const customPreset: CustomPreset = metadata.services
+                    ? { domain: input.domain }
+                    : {
+                          privateKeySecurityMode: PrivateKeySecurityMode.PROMPT_MAIN_TRANSPORT,
+                          nodes: [
+                              {
+                                  friendlyName: friendlyName,
+                                  host: hostname,
+                                  voting: metadata.voting,
+                                  harvesting: metadata.harvesting,
+                                  dockerComposeDebugMode: false,
+                                  brokerDockerComposeDebugMode: false,
+                              },
+                          ],
+                      };
                 if (metadata.api && nodeTypeInput.restProtocol == RestProtocol.HttpsOnly) {
                     customPreset.gateways = [
                         {
@@ -164,7 +166,7 @@ export class NetworkConfigurationService {
         return output;
     }
 
-    public async updateNodes({ nodePassword, offline, composeUser, zip }: UpdateNodesParams): Promise<void> {
+    public async configureNodes({ nodePassword, offline, composeUser, zip }: UpdateNodesParams): Promise<void> {
         const input = await NetworkUtils.loadNetwork(this.workingDir);
         const networkPreset = ConfigLoader.loadNetworkPreset(input.preset, this.workingDir);
         const customNetwork = YamlUtils.isYmlFile(input.preset);
@@ -183,25 +185,20 @@ export class NetworkConfigurationService {
 
             const toStoreCustomPreset = CryptoUtils.removePrivateKeys(node.customPreset) as CustomPreset;
 
-            const nodeCustomPreset: DeepPartial<NodePreset> | undefined = toStoreCustomPreset?.nodes?.[0];
-            if (!nodeCustomPreset) {
-                throw new Error(`Node's custom preset cannot be found!`);
-            }
-
             const metadata = nodesMetadata[node.nodeType];
-            if (metadata.demo) {
+            if (metadata.demo || metadata.services) {
                 const faucetAccount = input.faucetBalances
                     ? await this.keyStore.getNetworkAccount(input.networkType, 'faucet', true)
                     : undefined;
-                toStoreCustomPreset.faucets = [
-                    _.merge(
-                        {
-                            repeat: faucetAccount ? 1 : 0,
-                            privateKey: faucetAccount?.privateKey,
+                const faucetCustomPreset: DeepPartial<FaucetPreset> = {
+                    repeat: faucetAccount ? 1 : 0,
+                    compose: {
+                        environment: {
+                            FAUCET_PRIVATE_KEY: faucetAccount?.privateKey,
                         },
-                        toStoreCustomPreset.faucets?.[0],
-                    ),
-                ];
+                    },
+                };
+                toStoreCustomPreset.faucets = [_.merge(faucetCustomPreset, toStoreCustomPreset.faucets?.[0])];
             }
 
             if (input.nemesisSeedFolder) {
@@ -241,6 +238,7 @@ export class NetworkConfigurationService {
                 {
                     user: composeUser || ConfigService.defaultParams.user,
                     target: bootstrapTargetFolder,
+                    offline: offline,
                     upgrade: true,
                     workingDir: this.workingDir,
                     password: nodePassword as string,
@@ -248,11 +246,14 @@ export class NetworkConfigurationService {
                 result.presetData,
                 result.addresses,
             );
-            const nodeAddresses = result.addresses.nodes?.[0];
-            if (!nodeAddresses) {
-                throw new Error('Node addresses should have been resolved!!!');
+            if (!metadata.services) {
+                const nodeAddresses = result.addresses.nodes?.[0];
+                if (!nodeAddresses) {
+                    throw new Error('Node addresses should have been resolved!!!');
+                }
+                node.addresses = nodeAddresses;
             }
-            node.addresses = nodeAddresses;
+
             if (zip) {
                 const zipName = `${hostname}.zip`;
                 const zipDir = `${this.workingDir}/distribution`;

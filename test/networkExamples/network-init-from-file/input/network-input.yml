@@ -1,0 +1,44 @@
+preset: custom-network-preset.yml
+cloneFromPreset: mainnet
+domain: mycompany.com
+suffix: myc
+friendlyNamePattern: $suffix-$nickname-$friendlyNumber
+networkType: 104
+isNewNetwork: true
+faucetBalances:
+    - 392146430
+additionalCurrencyDistributions:
+    -
+        -
+            address: NDUPFADIRKPB2QFAPKHGSA6RWDZ5M6SCYQ2VVNA
+            amount: 500
+        -
+            address: NBPVJT4IPIZ6X3BWEK3FLIDMAJXHSZ4R67Z2LZI
+            amount: 100
+nodeTypes:
+    -
+        nickName: dual
+        nodeType: VotingDual
+        balances:
+            - 3000000
+        total: 2
+        restProtocol: HttpsOnly
+    -
+        nickName: myservices
+        nodeType: Services
+        balances: []
+        total: 1
+customNetworkPreset:
+    nemesis:
+        mosaics:
+            -
+                name: gold
+    reportBootstrapVersion: 1.1.0
+    peersP2PListLimit: 10000
+    peersApiListLimit: 10000
+    restDeploymentToolVersion: 1.0.8
+    restDeploymentToolLastUpdatedDate: '2021-07-05'
+    networkDescription: My Private Test Network
+    nemesisGenerationHashSeed: 000000000000000000000000000000000000000000000000000000000000000A
+    epochAdjustment: 1626575785s
+    baseNamespace: pirate
