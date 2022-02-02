@@ -495,7 +495,7 @@ export class InitService {
         const list: CurrencyDistribution[] = [];
         this.logger.info('');
         this.logger.info(
-            `In additions to the node, faucet and founder accounts, you can include (opt-in) more accounts into the nemesis block by distributing ${mosaicName} coins.`,
+            `In addition to the node, faucet and founder accounts, you can include (opt-in) more accounts into the nemesis block by distributing ${mosaicName} coins.`,
         );
         while (await this.confirm(`Do you want to distribute coin ${mosaicName} to different accounts on the nemesis block?`, false)) {
             const address = await this.promptAddress(networkType, 'distribution address');
