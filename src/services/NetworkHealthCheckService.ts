@@ -15,6 +15,7 @@
  */
 import * as _ from 'lodash';
 import { Socket } from 'net';
+import { firstValueFrom } from 'rxjs';
 import { KeyName, Logger } from 'symbol-bootstrap';
 import { NodeStatusEnum } from 'symbol-openapi-typescript-fetch-client';
 import { AccountLinkVotingKey, Address, FinalizationProof } from 'symbol-sdk';
@@ -89,10 +90,9 @@ export class NetworkHealthCheckService {
             throw new Error('There are not running nodes. Have you deployed?');
         }
         const bestNodeRepositoryFactory = NetworkUtils.createRepositoryFactory(bestNodeInfo.bestRestUrl, timeout);
-        const finalizationData = await bestNodeRepositoryFactory
-            .createFinalizationRepository()
-            .getFinalizationProofAtEpoch(bestNodeInfo.finalizedEpoch)
-            .toPromise();
+        const finalizationData = await firstValueFrom(
+            bestNodeRepositoryFactory.createFinalizationRepository().getFinalizationProofAtEpoch(bestNodeInfo.finalizedEpoch),
+        );
 
         const reports = await Promise.all(
             input.nodes.map(async (node) => {
@@ -153,8 +153,8 @@ export class NetworkHealthCheckService {
                     try {
                         const url = NetworkUtils.resolveRestUrl(node.hostname, node.restProtocol);
                         const repositoryFactory = NetworkUtils.createRepositoryFactory(url, timeout);
-                        const chainInfo = await repositoryFactory.createChainRepository().getChainInfo().toPromise();
-                        const nodeInfo = await repositoryFactory.createNodeRepository().getNodeInfo().toPromise();
+                        const chainInfo = await firstValueFrom(repositoryFactory.createChainRepository().getChainInfo());
+                        const nodeInfo = await firstValueFrom(repositoryFactory.createNodeRepository().getNodeInfo());
                         return {
                             height: chainInfo.height.compact(),
                             finalizedHeight: chainInfo.latestFinalizedBlock.height.compact(),
@@ -202,7 +202,7 @@ export class NetworkHealthCheckService {
         const testUrl = `${url}/node/health`;
         report.success(`Testing ${testUrl}`);
         try {
-            const healthStatus = await nodeRepository.getNodeHealth().toPromise();
+            const healthStatus = await firstValueFrom(nodeRepository.getNodeHealth());
             if (healthStatus.apiNode === NodeStatusEnum.Down) {
                 report.error(`Rest ${testUrl} is NOT up and running: Api Node is still Down!`);
             } else if (healthStatus.db === NodeStatusEnum.Down) {
@@ -215,7 +215,7 @@ export class NetworkHealthCheckService {
         }
 
         try {
-            const chainInfo = await repositoryFactory.createChainRepository().getChainInfo().toPromise();
+            const chainInfo = await firstValueFrom(repositoryFactory.createChainRepository().getChainInfo());
             const nodeHeight = chainInfo.height.compact();
             const nodeFinalizedHeight = chainInfo.latestFinalizedBlock.height.compact();
             const nodeFinalizationEpoch = chainInfo.latestFinalizedBlock.finalizationEpoch;
@@ -244,7 +244,7 @@ export class NetworkHealthCheckService {
         }
 
         try {
-            const nodeInfo = await repositoryFactory.createNodeRepository().getNodeInfo().toPromise();
+            const nodeInfo = await firstValueFrom(repositoryFactory.createNodeRepository().getNodeInfo());
             if (nodeInfo.version < maxNodeData.serverVersion) {
                 report.error(`Node ${node.hostname} version is ${nodeInfo.version} when current is ${maxNodeData.serverVersion}`);
             } else {
@@ -287,7 +287,7 @@ export class NetworkHealthCheckService {
             }
         };
         try {
-            const accountInfo = await accountRepository.getAccountInfo(address).toPromise();
+            const accountInfo = await firstValueFrom(accountRepository.getAccountInfo(address));
             if (metadata.harvesting) {
                 verify(KeyName.VRF, node.addresses?.vrf?.publicKey, accountInfo.supplementalPublicKeys.vrf?.publicKey);
                 verify(KeyName.Remote, node.addresses?.remote?.publicKey, accountInfo.supplementalPublicKeys.linked?.publicKey);

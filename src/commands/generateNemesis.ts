@@ -76,7 +76,7 @@ After running this command, your new network nemesis seed would be created. It a
         logger.info('');
         logger.info(`Once you are happy, run:`);
         logger.info('');
-        logger.info(`$ ${NetworkCommandUtils.CLI_TOOL} configureNodes --offline`);
+        logger.info(`$ ${NetworkCommandUtils.CLI_TOOL} configureNodes --offline --zip`);
         logger.info('');
         logger.info(`To generate the nodes' configuration ready to be deployed.`);
 

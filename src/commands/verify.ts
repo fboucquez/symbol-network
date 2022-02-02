@@ -19,7 +19,6 @@ import {
     AppVersionService,
     AppVersionVerifyAction,
     Constants,
-    Logger,
     LoggerFactory,
     LogType,
     RuntimeService,
@@ -38,7 +37,7 @@ export default class Verify extends Command {
 
     public async run(): Promise<void> {
         NetworkCommandUtils.showBanner();
-        const logger: Logger = LoggerFactory.getLogger(LogType.Console);
+        const logger = LoggerFactory.getLogger(LogType.Console);
         const service = new VerifyService(logger);
         const runtimeService = new RuntimeService(logger);
         const appVersionService = new AppVersionService(logger, runtimeService);

@@ -69,6 +69,7 @@ describe('Init', () => {
             `${TestUtils.toKey('F')}\n`, //sink
             `${TestUtils.toKey('AA')}\n`, //sink
             //First node
+            StdUtils.keys.down,
             `\n`,
             '2',
             `\n`,
@@ -77,6 +78,9 @@ describe('Init', () => {
             `Y\n`,
             `Y\n`,
             //Second node
+            StdUtils.keys.down,
+            StdUtils.keys.down,
+            StdUtils.keys.down,
             StdUtils.keys.down,
             StdUtils.keys.down,
             StdUtils.keys.down,
