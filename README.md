@@ -47,7 +47,7 @@ $ npm install -g symbol-network
 $ symbol-network COMMAND
 running command...
 $ symbol-network (-v|--version|version)
-symbol-network/0.0.1 linux-x64 node-v12.22.1
+symbol-network/0.0.2 linux-x64 node-v12.22.9
 $ symbol-network --help [COMMAND]
 USAGE
   $ symbol-network COMMAND

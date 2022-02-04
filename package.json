@@ -1,6 +1,6 @@
 {
     "name": "symbol-network",
-    "version": "0.0.1",
+    "version": "0.0.2",
     "description": "CLI tools to create node clusters for new or existing Symbol networks.",
     "bin": {
         "symbol-network": "bin/run"
