@@ -27,6 +27,8 @@ To handle dozens or hundreds of Symbol Nodes in "cattle" style, where nodes are 
 
 If you are creating a Symbol node for the first time, please have look at the [symbol-bootstrap](https://github.com/fboucquez/symbol-bootstrap) cli.
 
+For more information, checkout this [guide/blog post](https://dev.to/fboucquez/how-to-create-a-symbol-testnet-network-4hdd).
+
 # Requirements
 
 -   Node 12.0.0+

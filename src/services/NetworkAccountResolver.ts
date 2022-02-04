@@ -40,7 +40,7 @@ export class NetworkAccountResolver implements AccountResolver {
         if (!nodeName) {
             return this.promptAccount(networkType, account, keyName, nodeName, operationDescription, generateErrorMessage);
         }
-        this.logger.info(`Loading ${keyName} Key for ${nodeName} of ${this.node.number}. Operation ${operationDescription}`);
+        this.logger.info(`Loading ${keyName} Key for ${nodeName} number ${this.node.number}. Operation ${operationDescription}`);
         const storedAccount = await this.keyStore.getNodeAccount(networkType, keyName, nodeName, this.node, true);
         if (!storedAccount) {
             throw new Error(`${keyName} for node ${nodeName} does not exist!`);

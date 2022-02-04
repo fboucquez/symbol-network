@@ -56,6 +56,7 @@ export interface InitServiceParams {
 
 export class InitService {
     constructor(private readonly logger: Logger, private readonly workingDir: string, private readonly params: InitServiceParams) {}
+
     async execute(): Promise<void> {
         const networkInputFile = NetworkUtils.NETWORK_INPUT_FILE;
         const customNetworkPresetFile = NetworkUtils.NETWORK_PRESET_FILE;
@@ -391,10 +392,13 @@ export class InitService {
             const nickName = await this.promptName(`Nodes's Nick Name`, 'The nick name of the these nodes', metadata.nickName);
 
             const restProtocol = metadata.api ? await this.promptRestProtocol() : undefined;
+
             const { confirmCreate } = await prompt([
                 {
                     default: true,
-                    message: `Do you want to create ${total} nodes of type ${nodeTypeName} each with balance of ${balances.join(', ')}?`,
+                    message: balances.find((b) => b > 0)
+                        ? `Do you want to create ${total} nodes of type ${nodeTypeName} each with balance of ${balances.join(', ')}?`
+                        : `Do you want to create ${total} nodes of type ${nodeTypeName}?`,
                     type: 'confirm',
                     name: 'confirmCreate',
                 },
@@ -512,6 +516,7 @@ export class InitService {
     public async generateRandomKey(fieldName: string, message: string, networkType: NetworkType): Promise<string> {
         return this.promptText(fieldName, message, Account.generateNewAccount(networkType).privateKey, CommandUtils.isValidPrivateKey);
     }
+
     public async promptName(fieldName: string, message: string, defaultValue: string | undefined): Promise<string> {
         return this.promptText(fieldName, message, defaultValue, this.isValidName);
     }
@@ -563,7 +568,6 @@ export class InitService {
         fieldName: string,
         message: string,
         defaultValue: string | undefined,
-
         validate?: (input: any) => boolean | string | Promise<boolean | string>,
     ): Promise<string> {
         return this.confirmedPrompt(

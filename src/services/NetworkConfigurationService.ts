@@ -274,7 +274,7 @@ export class NetworkConfigurationService {
         this.logger.info('');
         this.logger.info(`The ${NetworkUtils.NETWORK_FILE} file has been updated!`);
         this.logger.info('');
-        this.logger.info(`Nodes have been created/upgraded. `);
+        this.logger.info(`Nodes have been created/upgraded. You can deploy them!`);
         this.logger.info('');
     }
 

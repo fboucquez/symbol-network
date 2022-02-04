@@ -64,7 +64,7 @@
         "lodash": "^4.17.21",
         "remove": "^0.1.5",
         "rxjs": "^7.5.2",
-        "symbol-bootstrap": "^1.1.4-alpha-7dcd80b",
+        "symbol-bootstrap": "^1.1.4",
         "symbol-sdk": "^1.0.4-alpha-202112211435",
         "tslib": "^2.3.1",
         "winston": "^3.5.1"

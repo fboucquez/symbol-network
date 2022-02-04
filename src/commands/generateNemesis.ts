@@ -59,7 +59,7 @@ After running this command, your new network nemesis seed would be created. It a
         logger.info('');
         logger.info('Nemesis block has been generated. To verify the block using a demo box run:');
         logger.info('');
-        logger.info(`$ symbol-bootstrap start -t ${nemesisTargetFolder} --noPassword --detached --healthCheck --report`);
+        logger.info(`$ symbol-bootstrap start -t ${nemesisTargetFolder} --noPassword --detached --healthCheck --report --pullImages`);
         logger.info('');
         logger.info(`Try the demo node by going to:`);
         logger.info(' - Rest Accounts - http://localhost:3000/accounts');
